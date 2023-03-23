@@ -28,18 +28,33 @@ function setup()
   COLOR_CASILLERO_MARCADO = color("#278EF2");
 
   // Modificar/completar
+
+  ponerMinaCasillero(5, 5);
 }
 
 
 function draw() {
   if (hizoClick == true)
   {
-    pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_SIN_MINA); //pinta el casillero clickeado. Modificar/completar
+    console.log(tableroDeMinas);
+    if (mouseButton == LEFT){
+      if (tieneMinaCasillero(columnaPresionada, filaPresionada)){
+        perder();
+      }
+      if (descubrirCasillero(columnaPresionada, filaPresionada)){
+        pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_SIN_MINA); //pinta el casillero clickeado. Modificar/completar
+      }
+
+    }
+    else{
+      pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_MARCADO); //pinta el casillero clickeado. Modificar/completar
+    }
 
 
     
     hizoClick = false;  //Indico que ya "procesé" el click del usuario. NO modificar
   }
+  
 }
 
 
