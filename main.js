@@ -28,15 +28,16 @@ function setup()
   COLOR_CASILLERO_MARCADO = color("#278EF2");
 
   // Modificar/completar
-
-  ponerMinaCasillero(5, 5);
+  
+  ponerMinasTablero()
+  casillerosSinDescubrir = FILAS*COLUMNAS;
 }
 
 
 function draw() {
+  
   if (hizoClick == true)
   {
-    console.log(tableroDeMinas);
     if (mouseButton == LEFT){
       if (tieneMinaCasillero(columnaPresionada, filaPresionada)){
         perder();
@@ -44,14 +45,17 @@ function draw() {
       if (descubrirCasillero(columnaPresionada, filaPresionada)){
         pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_SIN_MINA); //pinta el casillero clickeado. Modificar/completar
       }
+      if (casillerosSinDescubrir == CANTIDAD_MINAS){
+        ganoElJuego();
+      }
 
     }
     else{
-      pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_MARCADO); //pinta el casillero clickeado. Modificar/completar
+      pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_MARCADO); 
     }
 
 
-    
+    console.log(tableroDeMinas);
     hizoClick = false;  //Indico que ya "procesé" el click del usuario. NO modificar
   }
   
@@ -60,12 +64,20 @@ function draw() {
 
 function ganoElJuego()
 {
+  console.log("Victory")
+  ganar();
   return false;   //Esto hace que NUNCA gane el juego. Modificar/completar
 }
 
 function ponerMinasTablero()
 {
-  // Modificar/completar
+  for (let contador = 0; contador < CANTIDAD_MINAS; contador++)
+  {
+    var columnamina = floor(random(0, 10));
+    var filamina = floor(random(0, 10));
+    console.log(columnamina+" , "+filamina)
+    ponerMinaCasillero(columnamina,filamina);
+  }
 }
 
 function mostrarMinas()
