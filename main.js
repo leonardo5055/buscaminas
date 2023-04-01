@@ -28,9 +28,11 @@ function setup()
   COLOR_CASILLERO_MARCADO = color("#278EF2");
 
   // Modificar/completar
+
   
   ponerMinasTablero()
   casillerosSinDescubrir = FILAS*COLUMNAS;
+  
 }
 
 
@@ -39,13 +41,14 @@ function draw() {
   if (hizoClick == true)
   {
     if (mouseButton == LEFT){
-      if (tieneMinaCasillero(columnaPresionada, filaPresionada)){
-        perder();
-      }
       if (descubrirCasillero(columnaPresionada, filaPresionada)){
         pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_SIN_MINA); //pinta el casillero clickeado. Modificar/completar
-      }
-      if (casillerosSinDescubrir == CANTIDAD_MINAS){
+        contarMinasAlrededor();
+      }else if (tieneMinaCasillero(columnaPresionada, filaPresionada)){ //ver si tine una mina para perder
+        perder();
+        pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_CON_MINA); 
+        mostrarMinas(COLUMNAS, FILAS)
+      }else if (casillerosSinDescubrir == CANTIDAD_MINAS){
         ganoElJuego();
       }
 
@@ -53,9 +56,8 @@ function draw() {
     else{
       pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_MARCADO); 
     }
-
-
-    console.log(tableroDeMinas);
+    mostrarMinas()
+    //console.log(tableroDeMinas);
     hizoClick = false;  //Indico que ya "procesé" el click del usuario. NO modificar
   }
   
@@ -75,14 +77,21 @@ function ponerMinasTablero()
   {
     var columnamina = floor(random(0, 10));
     var filamina = floor(random(0, 10));
-    console.log(columnamina+" , "+filamina)
+    console.log(columnamina+" , "+filamina);
     ponerMinaCasillero(columnamina,filamina);
   }
 }
 
-function mostrarMinas()
+function mostrarMinas(COLUMNAS, FILAS)
 {
-  // Modificar/completar
+  for (let contadorC = 0; contadorC < COLUMNAS; contadorC++){
+    for (let contadorF = 0; contadorF < FILAS; contadorF++){
+      if (tieneMinaCasillero(contadorC, contadorF)){ //ver si tine una mina para perder
+        pintarCasillero(contadorC, contadorF, COLOR_CASILLERO_CON_MINA); 
+      }
+    }
+  }
+  
 }
 
 function contarMinasAlrededor(columna, fila)
