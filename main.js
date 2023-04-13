@@ -1,7 +1,7 @@
 //Constantes del juego
-const COLUMNAS = 10;
-const FILAS = 10;
-const CANTIDAD_MINAS = 10;
+const COLUMNAS = 3;
+const FILAS = 3;
+const CANTIDAD_MINAS = 7;
 
 //Variables con colores para los casilleros (NO se pudieron declarar como constantes ya que  la fn color sólo está definida para el setup y el draw)
 var COLOR_CASILLERO_CON_MINA;
@@ -75,10 +75,18 @@ function ponerMinasTablero()
 {
   for (let contador = 0; contador < CANTIDAD_MINAS; contador++)
   {
-    var columnamina = floor(random(0, 10));
-    var filamina = floor(random(0, 10));
+    var columnamina = floor(random(0, COLUMNAS));
+    var filamina = floor(random(0, FILAS));
     console.log(columnamina+" , "+filamina);
     ponerMinaCasillero(columnamina,filamina);
+    /*if(tieneMinaCasillero(4, 5))
+    {
+        //esto se ejecuta si la columna 4, fila 5 tiene una mina
+    }
+    else
+    {
+        //esto se ejecuta si la columna 4, fila 5 NO tiene una mina
+    }*/
   }
 }
 
