@@ -1,7 +1,7 @@
 //Constantes del juego
-const COLUMNAS = 3;
-const FILAS = 3;
-const CANTIDAD_MINAS = 7;
+const COLUMNAS = 10;
+const FILAS = 10;
+const CANTIDAD_MINAS = 10;
 
 //Variables con colores para los casilleros (NO se pudieron declarar como constantes ya que  la fn color sólo está definida para el setup y el draw)
 var COLOR_CASILLERO_CON_MINA;
@@ -27,9 +27,6 @@ function setup()
   COLOR_CASILLERO_SIN_MINA = color("#1CC932");
   COLOR_CASILLERO_MARCADO = color("#278EF2");
 
-  // Modificar/completar
-
-  
   ponerMinasTablero()
   casillerosSinDescubrir = FILAS*COLUMNAS;
   
@@ -42,12 +39,15 @@ function draw() {
   {
     if (mouseButton == LEFT){
       if (descubrirCasillero(columnaPresionada, filaPresionada)){
+        
         pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_SIN_MINA); //pinta el casillero clickeado. Modificar/completar
-        contarMinasAlrededor();
+        contarMinasAlrededor(columnaPresionada, filaPresionada);
+        descubrirCasillero(columnaPresionada, filaPresionada)
+        
       }else if (tieneMinaCasillero(columnaPresionada, filaPresionada)){ //ver si tine una mina para perder
         perder();
         pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_CON_MINA); 
-        mostrarMinas(COLUMNAS, FILAS)
+        mostrarMinas(COLUMNAS, FILAS);
       }else if (casillerosSinDescubrir == CANTIDAD_MINAS){
         ganoElJuego();
       }
@@ -56,7 +56,7 @@ function draw() {
     else{
       pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_MARCADO); 
     }
-    mostrarMinas()
+    
     //console.log(tableroDeMinas);
     hizoClick = false;  //Indico que ya "procesé" el click del usuario. NO modificar
   }
@@ -77,16 +77,17 @@ function ponerMinasTablero()
   {
     var columnamina = floor(random(0, COLUMNAS));
     var filamina = floor(random(0, FILAS));
-    console.log(columnamina+" , "+filamina);
-    ponerMinaCasillero(columnamina,filamina);
-    /*if(tieneMinaCasillero(4, 5))
+    if(tieneMinaCasillero(columnamina, filamina))
     {
-        //esto se ejecuta si la columna 4, fila 5 tiene una mina
+      //esto se ejecuta si la columna 4, fila 5 tiene una mina
+      contador=contador-1
     }
     else
     {
-        //esto se ejecuta si la columna 4, fila 5 NO tiene una mina
-    }*/
+      //esto se ejecuta si la columna 4, fila 5 NO tiene una mina
+      console.log(columnamina+" , "+filamina);
+      ponerMinaCasillero(columnamina,filamina);
+    }
   }
 }
 
